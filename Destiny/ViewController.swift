@@ -30,7 +30,8 @@ class ViewController: UIViewController {
     // UI Elements linked to the storyboard
     @IBOutlet weak var topButton: UIButton!
     @IBOutlet weak var bottomButton: UIButton!
-    @IBOutlet weak var storyTextView: UITextView!
+    @IBOutlet weak var storyTextView: UILabel!
+    @IBOutlet weak var restartButton: UIButton!
     
     
     // TODO Step 5: Initialise instance variables here
@@ -47,7 +48,7 @@ class ViewController: UIViewController {
     
     @IBAction func btnPressed(_ sender: UIButton) {
         // If the top button has been pressed.
-        if currentStory == 1 && sender.tag == 1 || currentStory == 2 && sender.tag == 1 {
+        if currentStory == 1 && (sender.tag == 1 || currentStory == 2) {
             updateStory(story3, 3)
             updateButtons(answer3a, answer3b)
         }
@@ -72,9 +73,12 @@ class ViewController: UIViewController {
         }
     }
     
-    func showStory(_ storyNumber: Int){
-        
+    @IBAction func restartPressed() {
+        updateStory(story1, 1)
+        updateButtons(answer1a, answer1b)
+        showButtons()
     }
+    
     
     func updateButtons(_ button1: String, _ button2: String){
         topButton.setTitle(button1, for: UIControl.State.normal)
@@ -82,9 +86,13 @@ class ViewController: UIViewController {
     }
     
     func updateStory(_ story: String, _ number: Int) {
-        print(number)
         currentStory = number;
         storyTextView.text = story
+        if number >= 4 {
+            restartButton.isHidden = false
+        }else{
+            restartButton.isHidden = true
+        }
     }
     
     func hideButtons() {
